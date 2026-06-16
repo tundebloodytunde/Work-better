@@ -55,28 +55,29 @@ function loadSchedule() {
   document.getElementById("day-type").innerHTML = type;
 
   const blocks = {
-    "OR Day": [
-      "6:00 — Pre‑Op Review",
-      "7:00 — Case 1",
-      "10:00 — Case 2",
-      "1:00 — Case 3",
-      "4:00 — Post‑Op Notes"
-    ],
-    "Clinic Day": [
-      "6:00 — Imaging Review",
-      "8:00 — Clinic AM",
-      "12:00 — Lunch + Calls",
-      "1:00 — Clinic PM",
-      "4:30 — Wrap‑Up"
-    ],
-    "Admin Day": [
-      "6:00 — Email + Billing",
-      "9:00 — Meetings",
-      "12:00 — Planning",
-      "2:00 — Writing",
-      "4:00 — Leadership Work"
-    ]
-  };
+  "OR Day": [
+    "6:00 — Pre‑Op Review",
+    "7:00 — Case 1",
+    "10:00 — Case 2",
+    "1:00 — Case 3",
+    "4:00 — Post‑Op Notes"
+  ],
+  "Clinic Day": [
+    "6:00 — Imaging Review",
+    "8:00 — Clinic AM",
+    "12:00 — Lunch + Calls",
+    "1:00 — Clinic PM",
+    "4:30 — Wrap‑Up"
+  ],
+  "Admin Day": [
+    "6:00 — Email + Billing",
+    "9:00 — Meetings",
+    "12:00 — Planning",
+    "2:00 — Writing",
+    "4:00 — Leadership Work"
+  ]
+};
+
 
   blocks[type].forEach(item => {
     const div = document.createElement("div");
