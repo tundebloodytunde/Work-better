@@ -1,5 +1,5 @@
 // ---------------------------
-// DATA
+// SECTION DATA
 // ---------------------------
 const sections = {
   or: [
@@ -34,15 +34,52 @@ const sections = {
 };
 
 // ---------------------------
-// LOAD TODAY
+// DAILY SCHEDULE LOGIC
 // ---------------------------
-function loadToday() {
-  const today = new Date().toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric"
+function getDayType() {
+  const day = new Date().getDay();
+  if (day === 1 || day === 3) return "OR Day";
+  if (day === 2 || day === 4) return "Clinic Day";
+  return "Admin Day";
+}
+
+function loadSchedule() {
+  const schedule = document.getElementById("schedule");
+  schedule.innerHTML = "";
+
+  const type = getDayType();
+  document.getElementById("day-type").innerHTML = type;
+
+  const blocks = {
+    "OR Day": [
+      "6:00 — Pre‑Op Review",
+      "7:00 — Case 1",
+      "10:00 — Case 2",
+      "1:00 — Case 3",
+      "4:00 — Post‑Op Notes"
+    ],
+    "Clinic Day": [
+      "6:00 — Imaging Review",
+      "8:00 — Clinic AM",
+      "12:00 — Lunch + Calls",
+      "1:00 — Clinic PM",
+      "4:30 — Wrap‑Up"
+    ],
+    "Admin Day": [
+      "6:00 — Email + Billing",
+      "9:00 — Meetings",
+      "12:00 — Planning",
+      "2:00 — Writing",
+      "4:00 — Leadership Work"
+    ]
+  };
+
+  blocks[type].forEach(item => {
+    const div = document.createElement("div");
+    div.className = "schedule-item";
+    div.textContent = item;
+    schedule.appendChild(div);
   });
-  document.getElementById("today").innerHTML = today;
 }
 
 // ---------------------------
@@ -58,8 +95,14 @@ function renderSection(sectionName) {
     const div = document.createElement("div");
     div.className = "card";
     div.innerHTML = `<h3>${item.title}</h3><p>${item.text}</p>`;
+    div.addEventListener("click", () => {
+      div.classList.toggle("expanded");
+    });
     container.appendChild(div);
   });
+
+  // Save last selected section
+  localStorage.setItem("lastSection", sectionName);
 }
 
 // ---------------------------
@@ -67,6 +110,9 @@ function renderSection(sectionName) {
 // ---------------------------
 document.querySelectorAll("nav button").forEach(btn => {
   btn.addEventListener("click", () => {
+    document.querySelectorAll("nav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
     const section = btn.getAttribute("data-section");
     renderSection(section);
   });
@@ -75,5 +121,19 @@ document.querySelectorAll("nav button").forEach(btn => {
 // ---------------------------
 // INIT
 // ---------------------------
-loadToday();
-renderSection("or"); // default view
+function init() {
+  const today = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+  document.getElementById("today").innerHTML = today;
+
+  loadSchedule();
+
+  const last = localStorage.getItem("lastSection") || "or";
+  document.querySelector(`button[data-section="${last}"]`).classList.add("active");
+  renderSection(last);
+}
+
+init();
