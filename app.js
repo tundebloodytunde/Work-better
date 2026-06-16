@@ -38,10 +38,14 @@ const sections = {
 // ---------------------------
 function getDayType() {
   const day = new Date().getDay();
-  if (day === 1 || day === 3) return "OR Day";
-  if (day === 2 || day === 4) return "Clinic Day";
-  return "Admin Day";
+
+  // Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5
+  if (day === 1 || day === 4) return "OR Day";          // Monday + Thursday
+  if (day === 3 || day === 5) return "Clinic Day";      // Wednesday + Friday
+  if (day === 2) return "Admin Day";                    // Tuesday
+  return "Admin Day";                                   // Weekend default
 }
+
 
 function loadSchedule() {
   const schedule = document.getElementById("schedule");
