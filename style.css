@@ -17,14 +17,26 @@ h1 {
   font-size: 26px;
 }
 
-#today {
-  margin-top: 8px;
-  font-size: 16px;
+#today, #day-type {
+  margin-top: 6px;
+  font-size: 15px;
   color: #aaa;
 }
 
-#card-container {
+main {
   padding: 20px;
+}
+
+#schedule {
+  margin-bottom: 20px;
+}
+
+.schedule-item {
+  background: #111;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #333;
 }
 
 .card {
@@ -33,20 +45,27 @@ h1 {
   margin-bottom: 14px;
   border-radius: 12px;
   border: 1px solid #333;
-  transition: 0.2s;
+  transition: 0.25s;
+  cursor: pointer;
 }
 
 .card:hover {
-  border-color: #555;
+  border-color: #666;
 }
 
-.card h3 {
-  margin: 0 0 8px 0;
+.card.expanded {
+  background: #181818;
+  border-color: #777;
 }
 
 .card p {
-  margin: 0;
+  margin-top: 10px;
   color: #ccc;
+  display: none;
+}
+
+.card.expanded p {
+  display: block;
 }
 
 nav {
@@ -69,6 +88,6 @@ nav button {
   font-size: 14px;
 }
 
-nav button:hover {
-  background: #222;
+nav button.active {
+  background: #333;
 }
