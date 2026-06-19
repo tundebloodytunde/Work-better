@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',           // Important for static export on Cloudflare
-  trailingSlash: true,
+  // Remove 'export' for now
   images: {
-    unoptimized: true,        // Required for static export
+    unoptimized: true,
   },
 };
 
