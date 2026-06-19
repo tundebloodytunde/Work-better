@@ -5,15 +5,30 @@ export async function PATCH(request: Request) {
   try {
     const { id, status } = await request.json();
 
-    const { error } = await supabase
+    if (!id || !status) {
+      return NextResponse.json(
+        { error: "Missing id or status" }, 
+        { status: 400 }
+      );
+    }
+
+    const { data, error } = await supabase
       .from('tasks')
-      .update({ status })
-      .eq('id', id);
+      .update({ status, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single();
 
     if (error) throw error;
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ 
+      success: true, 
+      task: data 
+    });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Task update error:", error);
+    return NextResponse.json({ 
+      error: error.message || "Failed to update task" 
+    }, { status: 500 });
   }
 }
