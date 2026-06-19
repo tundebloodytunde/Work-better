@@ -8,7 +8,6 @@ export default function TodayPage() {
   const [currentBlock, setCurrentBlock] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load schedule + next actions
   async function loadData() {
     const dayRes = await fetch("/api/day");
     const dayJson = await dayRes.json();
@@ -23,7 +22,14 @@ export default function TodayPage() {
   }
 
   useEffect(() => {
-    loadData();
+    loadData(); // initial load
+
+    // Auto-refresh every 60 seconds
+    const interval = setInterval(() => {
+      loadData();
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
