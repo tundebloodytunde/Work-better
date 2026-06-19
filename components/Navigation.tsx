@@ -1,6 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
 const navLinks = [
   { href: '/today', label: 'Today' },
@@ -10,6 +12,16 @@ const navLinks = [
 
 export default function Navigation() {
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    window.location.href = '/';
+  };
 
   return (
     <nav className="bg-white border-b sticky top-0 z-50">
@@ -26,6 +38,18 @@ export default function Navigation() {
               {link.label}
             </Link>
           ))}
+        </div>
+
+        <div>
+          {user ? (
+            <button onClick={handleLogout} className="text-sm text-red-600 hover:underline">
+              Logout
+            </button>
+          ) : (
+            <Link href="/auth/login" className="text-sm font-medium text-blue-600 hover:underline">
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
     </nav>
