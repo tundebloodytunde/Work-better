@@ -51,4 +51,4 @@ export async function PATCH(req: Request) {
   const { data, error } = await supabase
     .from("tasks")
     .update(updates)
-    .eq("
+    .eq(")
