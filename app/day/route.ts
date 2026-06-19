@@ -1,18 +1,30 @@
-import { NextResponse } from "next/server";
-
-// Helper to create Date objects for today
-function d(hour: number, minute: number = 0) {
-  const now = new Date();
-  now.setHours(hour, minute, 0, 0);
-  return now.toISOString();
-}
+import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const schedule = [
-    { label: "Deep Scholarly", start: d(7), end: d(8) },
-    { label: "Clinic Block 1", start: d(8, 30), end: d(9, 30) },
-    { label: "Lunch", start: d(12), end: d(13) },
-  ];
+  // Mock daily schedule (replace with real logic / Supabase query later)
+  const schedule = {
+    mode: "Deep Work",
+    blocks: [
+      {
+        label: "Morning Block",
+        start: "2026-06-19T08:00:00",
+        end: "2026-06-19T10:00:00",
+        type: "clinical"
+      },
+      {
+        label: "OR Time",
+        start: "2026-06-19T10:30:00",
+        end: "2026-06-19T12:30:00",
+        type: "or"
+      },
+      {
+        label: "Admin / Buffer",
+        start: "2026-06-19T13:00:00",
+        end: "2026-06-19T14:00:00",
+        type: "admin"
+      },
+    ]
+  };
 
   return NextResponse.json(schedule);
 }
