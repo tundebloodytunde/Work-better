@@ -105,3 +105,65 @@ export default function TasksPage() {
             onChange={(e) => setPriority(Number(e.target.value))}
           >
             <option value={1}>Priority 1</option>
+            <option value={2}>Priority 2</option>
+            <option value={3}>Priority 3</option>
+          </select>
+
+          <input
+            type="number"
+            className="border p-2 rounded w-32"
+            value={estimatedMinutes}
+            onChange={(e) => setEstimatedMinutes(Number(e.target.value))}
+            placeholder="Minutes"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Add Task
+        </button>
+      </form>
+
+      {/* Task List */}
+      <div className="space-y-4">
+        {tasks.map((task) => (
+          <div
+            key={task.id}
+            className="border p-4 rounded-lg bg-white shadow-sm flex justify-between items-center"
+          >
+            <div>
+              <div
+                className={`text-lg font-semibold ${
+                  task.status === "done" ? "line-through text-gray-400" : ""
+                }`}
+              >
+                {task.title}
+              </div>
+              <div className="text-sm text-gray-500">
+                {task.category} • P{task.priority} • {task.estimated_minutes} min
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => toggleComplete(task)}
+                className="px-3 py-1 rounded bg-green-600 text-white"
+              >
+                {task.status === "done" ? "Undo" : "Done"}
+              </button>
+
+              <button
+                onClick={() => deleteTask(task.id)}
+                className="px-3 py-1 rounded bg-red-600 text-white"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+}
