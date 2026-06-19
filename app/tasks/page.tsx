@@ -105,27 +105,3 @@ export default function TasksPage() {
             onChange={(e) => setPriority(Number(e.target.value))}
           >
             <option value={1}>Priority 1</option>
-            <option value={2}>Priority 2</option>
-            <option value={3}>Priority 3</option>
-          </select>
-
-          <input
-            type="number"
-            className="border p-2 rounded w-32"
-            value={estimatedMinutes}
-            onChange={(e) => setEstimatedMinutes(Number(e.target.value))}
-            placeholder="Minutes"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Add Task
-        </button>
-      </form>
-
-      {/* Task List */}
-      <div className="space-y-4">
-        {tasks.map
